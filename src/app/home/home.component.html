@@ -1,0 +1,53 @@
+<p>Total projects found: {{ projects?.length }}</p>
+
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name" />
+    <div
+      *ngIf="
+        projectForm.get('name')?.invalid && projectForm.get('name')?.touched
+      "
+    >
+      Name is required.
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <input id="description" formControlName="description" />
+      <div
+        *ngIf="
+          projectForm.get('description')?.invalid &&
+          projectForm.get('description')?.touched
+        "
+      >
+        Description is required.
+      </div>
+    </div>
+    <button type="submit" [disabled]="projectForm.invalid">Save Project</button>
+  </div>
+</form>
+
+<div *ngIf="projects?.length === 0">No project found!</div>
+<div *ngIf="projects?.length !== 0">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of projects; trackBy: trackByProjectId">
+        <td>{{ project.id }}</td>
+        <td>{{ project.name }}</td>
+        <td>{{ project.description }}</td>
+        <td>
+          <button (click)="onUpdate(project)">Update</button>
+          <button (click)="onDelete(project.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
