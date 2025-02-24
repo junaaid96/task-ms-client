@@ -1,0 +1,84 @@
+<div class="container">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="mb-4">
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input id="title" formControlName="title" class="form-control" />
+      <div
+        *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+        class="text-danger"
+      >
+        Title is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input
+        id="description"
+        formControlName="description"
+        class="form-control"
+      />
+      <div
+        *ngIf="
+          taskForm.get('description')?.invalid &&
+          taskForm.get('description')?.touched
+        "
+        class="text-danger"
+      >
+        Description is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="priority">Priority:</label>
+      <select id="priority" formControlName="priority" class="form-control">
+        <option *ngFor="let priority of taskPriorities" [value]="priority">
+          {{ priority }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched
+        "
+        class="text-danger"
+      >
+        Priority is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" formControlName="status" class="form-control">
+        <option *ngFor="let status of taskStatuses" [value]="status">
+          {{ status }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="dueDate">Due Date:</label>
+      <input
+        id="dueDate"
+        type="date"
+        formControlName="dueDate"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="projectId">Project:</label>
+      <select id="projectId" formControlName="projectId" class="form-control">
+        <option *ngFor="let project of projects" [value]="project.id">
+          {{ project.name }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          taskForm.get('projectId')?.invalid &&
+          taskForm.get('projectId')?.touched
+        "
+        class="text-danger"
+      >
+        Please select a project for the task.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">
+      Save Task
+    </button>
+  </form>
+</div>

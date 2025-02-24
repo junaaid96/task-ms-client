@@ -1,0 +1,132 @@
+<div class="container">
+  <p class="text-center">Total projects found: {{ projects?.length }}</p>
+
+  <form
+    [formGroup]="projectForm"
+    (ngSubmit)="projectEditMode ? onUpdateProject() : onSubmitProject()"
+    class="mb-4"
+  >
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input id="name" formControlName="name" class="form-control" />
+      <div
+        *ngIf="
+          projectForm.get('name')?.invalid && projectForm.get('name')?.touched
+        "
+        class="text-danger"
+      >
+        Name is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input
+        id="description"
+        formControlName="description"
+        class="form-control"
+      />
+      <div
+        *ngIf="
+          projectForm.get('description')?.invalid &&
+          projectForm.get('description')?.touched
+        "
+        class="text-danger"
+      >
+        Description is required.
+      </div>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="projectForm.invalid"
+    >
+      {{ projectEditMode ? "Update" : "Save" }}
+    </button>
+  </form>
+
+  <div *ngIf="projects?.length === 0" class="alert alert-info">
+    No project found!
+  </div>
+  <div *ngIf="projects?.length !== 0">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Total Tasks</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of projects; trackBy: trackByProjectId">
+          <td>{{ project.id }}</td>
+          <td>{{ project.name }}</td>
+          <td>{{ project.description }}</td>
+          <td>{{ (tasks | filterByProjectId : project.id)?.length }}</td>
+          <td>
+            <button
+              class="btn btn-sm btn-warning"
+              (click)="onUpdateProjectEvent(project)"
+            >
+              Update
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="onDeleteProjectEvent(project.id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr *ngFor="let project of projects; trackBy: trackByProjectId">
+          <td colspan="5">
+            <div *ngIf="(tasks | filterByProjectId : project.id)?.length !== 0">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Project Name</th>
+                    <th>Task ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let task of tasks | filterByProjectId : project.id"
+                  >
+                    <td>{{ task.projectName }}</td>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>{{ task.dueDate | date }}</td>
+                    <td>
+                      <button
+                        class="btn btn-sm btn-warning"
+                        (click)="onUpdateTask(task)"
+                      >
+                        Update
+                      </button>
+                      <button
+                        class="btn btn-sm btn-danger"
+                        (click)="onDeleteTask(task.id)"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

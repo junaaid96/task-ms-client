@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'home',
@@ -8,49 +7,38 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
   projects!: any;
-  projectForm!: FormGroup;
+  tasks!: any;
 
-  constructor(private apiService: ApiService, private formBuilder: FormBuilder) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.loadProjects();
+    this.loadTasks();
+  }
+
+  loadProjects(): void {
     this.apiService.getProjects().subscribe(response => {
       this.projects = response;
     },
       error => {
         console.error(error);
       });
+  }
 
-    this.projectForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required]
+  loadTasks(): void {
+    this.apiService.getTasks().subscribe(response => {
+      this.tasks = response;
+    }, error => {
+      console.error(error);
     });
   }
 
-  onSubmit(): void {
-    if (this.projectForm.valid) {
-      this.apiService.postProject(this.projectForm.value).subscribe(response => {
-        console.log('Project saved successfully', response);
-      },
-        error => {
-          console.error('Error saving project', error);
-        });
-      this.projectForm.reset();
-      this.refreshProjects();
-    }
-  }
-
-  trackByProjectId(index: number, project: any): number {
-    return project.id;
-  }
-
   refreshProjects(): void {
-    this.apiService.getProjects().subscribe(response => {
-      this.projects = response;
-    },
-      error => {
-        console.error(error);
-      });
+    this.loadProjects();
+  }
+
+  refreshTasks(): void {
+    this.loadTasks();
   }
 }
