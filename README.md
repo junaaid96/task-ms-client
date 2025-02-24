@@ -1,28 +1,109 @@
-# TaskManagementClient
+# Task Management System
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.19.
+A full-stack web application for managing projects and tasks built with Angular and Bootstrap.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- **Project Management**
+  - Create new projects
+  - Update existing projects
+  - Delete projects
+  - View project details
 
-## Code scaffolding
+- **Task Management**
+  - Create tasks within projects
+  - Update task details
+  - Delete tasks
+  - Filter tasks by project
+  - Set task priorities and status
+  - Track task due dates
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Technical Stack
 
-## Build
+- **Frontend**
+  - Angular 11.2.19
+  - Bootstrap 5.3.3
+  - TypeScript
+  - HTML/CSS
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Project Structure
 
-## Running unit tests
+```
+task-ms-client/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   ├── home/
+│   │   │   ├── project/
+│   │   │   └── task/
+│   │   ├── services/
+│   │   │   └── api.service.ts
+│   │   └── pipes/
+│   └── assets/
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Getting Started
 
-## Running end-to-end tests
+### Prerequisites
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- Node.js (v12 or higher)
+- npm (v6 or higher)
+- Angular CLI (v11.2.19)
 
-## Further help
+### Installation
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# task-ms-client
+1. Clone the repository
+```bash
+git clone <repository-url>
+```
+
+2. Install dependencies
+```bash
+cd task-ms-client
+npm install
+```
+
+3. Start the development server
+```bash
+ng serve
+```
+
+4. Navigate to `http://localhost:4200` in your browser
+
+## Usage
+
+### Projects
+- Click "Create Project" to add a new project
+- Use "Update" button to modify existing projects
+- Use "Delete" button to remove projects
+
+### Tasks
+- Select a project to add tasks
+- Fill in task details including:
+  - Title
+  - Description
+  - Priority (LOW, MEDIUM, HIGH, URGENT)
+  - Status (TODO, IN_PROGRESS, REVIEW, DONE)
+  - Due Date
+- Use "Update" to modify tasks
+- Use "Delete" to remove tasks
+
+## Development
+
+### Running Tests
+```bash
+ng test
+```
+
+### Building for Production
+```bash
+ng build --prod
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
