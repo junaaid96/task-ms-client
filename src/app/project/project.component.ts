@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { TaskComponent } from "../task/task.component";
 
 @Component({
   selector: 'project',
@@ -18,10 +19,15 @@ export class ProjectComponent implements OnInit {
   refreshProjects = new EventEmitter<void>();
 
   projectForm!: FormGroup;
-  projectEditMode!: boolean;
-  selectedProjectId!: number;
 
-  constructor(private apiService: ApiService, private formBuilder: FormBuilder) { }
+  projectEditMode!: boolean;
+  taskEditMode!: boolean;
+
+  selectedProjectId!: number;
+  selectedTaskId!: number;
+
+  constructor(private apiService: ApiService, private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.projectForm = this.formBuilder.group({
@@ -60,6 +66,7 @@ export class ProjectComponent implements OnInit {
   onUpdateProjectEvent(project: any): void {
     this.apiService.projectEditMode = true;
     this.projectEditMode = this.apiService.projectEditMode;
+
     this.selectedProjectId = project.id;
     this.projectForm.patchValue({
       name: project.name,
@@ -67,12 +74,30 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  onDeleteProjectEvent(): void {
-    console.log("project delete method.");
+  onDeleteProjectEvent(projectId: number): void {
+    this.apiService.deleteProject(projectId).subscribe(response => {
+      console.log('Deleted!');
+      this.refreshProjects.emit();
+    });
   }
 
   trackByProjectId(index: number, project: any): number {
     return project.id;
   }
 
+  // Task updatet and delete event
+  // onUpdateTaskEvent(task: any) {
+  //   this.apiService.taskEditMode = true;
+  //   this.taskEditMode = this.apiService.taskEditMode;
+
+  //   this.selectedTaskId = task.id;
+  //   this.taskComponent.taskForm.patchValue({
+  //     title: task.title,
+  //     description: task.description,
+  //     priority: task.priority,
+  //     status: task.status,
+  //     dueDate: task.dueDate ? new Date(task.dueDate).toISOString().substring(0, 10) : '',
+  //     projectId: task.projectId
+  //   });
+  // }
 }

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container w-50 m-auto">
   <p class="text-center">Total projects found: {{ projects?.length }}</p>
 
   <form
@@ -109,13 +109,13 @@
                     <td>
                       <button
                         class="btn btn-sm btn-warning"
-                        (click)="onUpdateTask(task)"
+                        (click)="onUpdateTaskEvent(task)"
                       >
                         Update
                       </button>
                       <button
                         class="btn btn-sm btn-danger"
-                        (click)="onDeleteTask(task.id)"
+                        (click)="onDeleteTaskEvent(task.id)"
                       >
                         Delete
                       </button>

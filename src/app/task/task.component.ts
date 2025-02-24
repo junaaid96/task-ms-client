@@ -45,7 +45,7 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmitTask() {
     if (this.taskForm.valid) {
       if (this.taskForm.value.dueDate) {
         this.taskForm.value.dueDate = new Date(this.taskForm.value.dueDate).toISOString();

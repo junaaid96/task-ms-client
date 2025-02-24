@@ -1,5 +1,5 @@
-<div class="container">
-  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="mb-4">
+<div class="container w-50 m-auto">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmitTask()" class="mb-4">
     <div class="form-group">
       <label for="title">Title:</label>
       <input id="title" formControlName="title" class="form-control" />
